@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -17,6 +18,8 @@ class PdfReaderScreen extends StatefulWidget {
 
 class _PdfReaderScreenState extends State<PdfReaderScreen> {
   bool _isGeneratingQr = false;
+  Uint8List? _pdfBytes;
+  bool _hasError = false;
 
   /// Exact PDF asset path
   String get _pdfAssetPath {
@@ -26,13 +29,25 @@ class _PdfReaderScreenState extends State<PdfReaderScreen> {
   @override
   void initState() {
     super.initState();
+    _loadPdf();
+  }
 
-    // Check which PDF is actually being opened.
-    debugPrint('-----------------------------------');
-    debugPrint('PDF TITLE: ${widget.document.title}');
-    debugPrint('PDF FILE: ${widget.document.fileName}');
-    debugPrint('PDF PATH: $_pdfAssetPath');
-    debugPrint('-----------------------------------');
+  Future<void> _loadPdf() async {
+    try {
+      final byteData = await DefaultAssetBundle.of(context).load(_pdfAssetPath);
+      if (mounted) {
+        setState(() {
+          _pdfBytes = byteData.buffer.asUint8List();
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _hasError = true;
+        });
+        debugPrint('Error loading PDF bytes manually: $e');
+      }
+    }
   }
 
   /// Generate QR code for the selected PDF
@@ -109,38 +124,42 @@ class _PdfReaderScreenState extends State<PdfReaderScreen> {
       body: Column(
         children: [
           Expanded(
-            child: SfPdfViewer.asset(
-              _pdfAssetPath,
+            child: _hasError
+                ? const Center(child: Text('Error loading document from bundle.'))
+                : _pdfBytes == null
+                    ? const Center(child: CircularProgressIndicator())
+                    : SfPdfViewer.memory(
+                        _pdfBytes!,
 
-              // PDF viewer settings
-              canShowScrollHead: true,
-              canShowScrollStatus: true,
-              canShowPaginationDialog: true,
-              pageLayoutMode: PdfPageLayoutMode.continuous,
-              enableDoubleTapZooming: true,
+                        // PDF viewer settings
+                        canShowScrollHead: true,
+                        canShowScrollStatus: true,
+                        canShowPaginationDialog: true,
+                        pageLayoutMode: PdfPageLayoutMode.continuous,
+                        enableDoubleTapZooming: true,
 
-              // IMPORTANT:
-              // This tells us if Flutter cannot load the actual PDF.
-              onDocumentLoadFailed: (details) {
-                debugPrint('PDF LOAD FAILED: ${details.description}');
+                        // IMPORTANT:
+                        // This tells us if Flutter cannot load the actual PDF.
+                        onDocumentLoadFailed: (details) {
+                          debugPrint('PDF LOAD FAILED: ${details.description}');
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'PDF could not be loaded: ${details.description}',
-                    ),
-                  ),
-                );
-              },
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'PDF could not be loaded: ${details.description}',
+                              ),
+                            ),
+                          );
+                        },
 
-              onDocumentLoaded: (details) {
-                debugPrint(
-                  'PDF LOADED SUCCESSFULLY: ${widget.document.fileName}',
-                );
+                        onDocumentLoaded: (details) {
+                          debugPrint(
+                            'PDF LOADED SUCCESSFULLY: ${widget.document.fileName}',
+                          );
 
-                debugPrint('PAGE COUNT: ${details.document.pages.count}');
-              },
-            ),
+                          debugPrint('PAGE COUNT: ${details.document.pages.count}');
+                        },
+                      ),
           ),
         ],
       ),

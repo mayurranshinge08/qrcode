@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart' show rootBundle;
 
 class LocalServer {
@@ -8,6 +9,24 @@ class LocalServer {
   /// Starts the local server and returns the URL string containing the local IP
   /// Example: http://192.168.1.15:8080/download
   static Future<String?> startServer(String assetPath) async {
+    if (kIsWeb) {
+      try {
+        // On Web, we cannot start a local socket server (dart:io is unsupported).
+        // However, the assets are already being served by the web server!
+        // We can just construct the direct URL to the PDF file.
+        final baseUrl = Uri.base.origin; // e.g. http://localhost:65444
+        final path = Uri.base.path; // In case the app is hosted in a sub-folder
+        
+        // Remove trailing slash from path if it exists to avoid double slashes
+        final cleanPath = path.endsWith('/') ? path.substring(0, path.length - 1) : path;
+        
+        final webUrl = '$baseUrl$cleanPath/$assetPath';
+        return webUrl;
+      } catch (e) {
+        return null;
+      }
+    }
+
     if (_server != null) {
       await stopServer();
     }
