@@ -37,7 +37,7 @@ class LocalServer {
       
       // Handle incoming requests
       _server!.listen((HttpRequest request) async {
-        if (request.uri.path == '/download') {
+        if (request.uri.path == '/document.pdf') {
           try {
             // Load the asset
             final byteData = await rootBundle.load(assetPath);
@@ -45,9 +45,27 @@ class LocalServer {
             final bytes = buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
 
             // Set headers for file download
-            request.response.headers.contentType = ContentType('application', 'pdf');
-            final fileName = assetPath.split('/').last;
+            // Using octet-stream and attachment forces the browser to download the file 
+            // via Android's DownloadManager rather than passing the URL directly to Google Drive.
+            request.response.headers.contentType = ContentType('application', 'octet-stream');
+            request.response.headers.contentLength = bytes.length;
+            
+            // Allow cross-origin just in case
+            request.response.headers.add('Access-Control-Allow-Origin', '*');
+            
+            // Clean up filename for the header to prevent browser parsing errors
+            String fileName = assetPath.split('/').last;
+            fileName = fileName.replaceAll(RegExp(r'[^a-zA-Z0-9.\-_ ]'), '_');
+            if (!fileName.toLowerCase().endsWith('.pdf')) {
+              fileName += '.pdf';
+            }
+            
             request.response.headers.add('Content-Disposition', 'attachment; filename="$fileName"');
+            
+            if (request.method == 'HEAD') {
+              await request.response.close();
+              return;
+            }
             
             // Write the file bytes
             request.response.add(bytes);
@@ -71,25 +89,43 @@ class LocalServer {
           type: InternetAddressType.IPv4, 
           includeLinkLocal: true,
         );
+        
+        // 1. Try to find a Wi-Fi or Ethernet interface first
         for (var interface in interfaces) {
-          for (var addr in interface.addresses) {
-            if (!addr.isLoopback) {
-              localIP = addr.address;
-              break; // get first non-loopback
+          final name = interface.name.toLowerCase();
+          if (name.contains('wlan') || name.contains('en') || name.contains('eth') || name.contains('ap')) {
+            for (var addr in interface.addresses) {
+              if (!addr.isLoopback) {
+                localIP = addr.address;
+                break;
+              }
             }
           }
           if (localIP != null) break;
+        }
+        
+        // 2. Fallback to any non-loopback interface
+        if (localIP == null) {
+          for (var interface in interfaces) {
+            for (var addr in interface.addresses) {
+              if (!addr.isLoopback) {
+                localIP = addr.address;
+                break;
+              }
+            }
+            if (localIP != null) break;
+          }
         }
       } catch (e) {
         // Fallback
       }
       
       if (localIP != null) {
-        _serverUrl = 'http://$localIP:${_server!.port}/download';
+        _serverUrl = 'http://$localIP:${_server!.port}/document.pdf';
         return _serverUrl;
       } else {
         // Fallback for emulator testing or if wifi IP fails
-        _serverUrl = 'http://127.0.0.1:${_server!.port}/download';
+        _serverUrl = 'http://127.0.0.1:${_server!.port}/document.pdf';
         return _serverUrl;
       }
     } catch (e) {

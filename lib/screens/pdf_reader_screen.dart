@@ -119,47 +119,55 @@ class _PdfReaderScreenState extends State<PdfReaderScreen> {
           overflow: TextOverflow.ellipsis,
         ),
         centerTitle: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Image.asset('assets/images/SUN Logo.jpg', height: 40),
+          ),
+        ],
       ),
 
       body: Column(
         children: [
           Expanded(
             child: _hasError
-                ? const Center(child: Text('Error loading document from bundle.'))
+                ? const Center(
+                    child: Text('Error loading document from bundle.'),
+                  )
                 : _pdfBytes == null
-                    ? const Center(child: CircularProgressIndicator())
-                    : SfPdfViewer.memory(
-                        _pdfBytes!,
+                ? const Center(child: CircularProgressIndicator())
+                : SfPdfViewer.memory(
+                    _pdfBytes!,
 
-                        // PDF viewer settings
-                        canShowScrollHead: true,
-                        canShowScrollStatus: true,
-                        canShowPaginationDialog: true,
-                        pageLayoutMode: PdfPageLayoutMode.continuous,
-                        enableDoubleTapZooming: true,
+                    // PDF viewer settings
+                    canShowScrollHead: true,
+                    canShowScrollStatus: true,
+                    canShowPaginationDialog: true,
+                    pageLayoutMode: PdfPageLayoutMode.continuous,
+                    enableDoubleTapZooming: true,
 
-                        // IMPORTANT:
-                        // This tells us if Flutter cannot load the actual PDF.
-                        onDocumentLoadFailed: (details) {
-                          debugPrint('PDF LOAD FAILED: ${details.description}');
+                    // IMPORTANT:
+                    // This tells us if Flutter cannot load the actual PDF.
+                    onDocumentLoadFailed: (details) {
+                      debugPrint('PDF LOAD FAILED: ${details.description}');
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'PDF could not be loaded: ${details.description}',
-                              ),
-                            ),
-                          );
-                        },
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'PDF could not be loaded: ${details.description}',
+                          ),
+                        ),
+                      );
+                    },
 
-                        onDocumentLoaded: (details) {
-                          debugPrint(
-                            'PDF LOADED SUCCESSFULLY: ${widget.document.fileName}',
-                          );
+                    onDocumentLoaded: (details) {
+                      debugPrint(
+                        'PDF LOADED SUCCESSFULLY: ${widget.document.fileName}',
+                      );
 
-                          debugPrint('PAGE COUNT: ${details.document.pages.count}');
-                        },
-                      ),
+                      debugPrint('PAGE COUNT: ${details.document.pages.count}');
+                    },
+                  ),
           ),
         ],
       ),
@@ -183,19 +191,17 @@ class _PdfReaderScreenState extends State<PdfReaderScreen> {
             children: [
               // BACK
               Expanded(
-                child: TextButton.icon(
-                  onPressed: _goBack,
-                  icon: const Icon(CupertinoIcons.back),
-                  label: const Text('Back'),
+                child: GestureDetector(
+                  onTap: _goBack,
+                  child: Image.asset('assets/images/Back.png', height: 40),
                 ),
               ),
 
               // HOME
               Expanded(
-                child: TextButton.icon(
-                  onPressed: _goHome,
-                  icon: const Icon(CupertinoIcons.home),
-                  label: const Text('Home'),
+                child: GestureDetector(
+                  onTap: _goHome,
+                  child: Image.asset('assets/images/Home.png', height: 40),
                 ),
               ),
 

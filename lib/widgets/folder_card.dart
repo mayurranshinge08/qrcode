@@ -2,52 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/document.dart';
 import '../theme/app_theme.dart';
-import '../utils/local_server.dart';
-import 'qr_dialog.dart';
 
-class DocumentCard extends StatefulWidget {
-  final PdfDocumentItem document;
+class FolderCard extends StatefulWidget {
+  final FolderItem folder;
   final VoidCallback onTap;
 
-  const DocumentCard({
+  const FolderCard({
     super.key,
-    required this.document,
+    required this.folder,
     required this.onTap,
   });
 
   @override
-  State<DocumentCard> createState() => _DocumentCardState();
+  State<FolderCard> createState() => _FolderCardState();
 }
 
-class _DocumentCardState extends State<DocumentCard> {
+class _FolderCardState extends State<FolderCard> {
   bool _isHovering = false;
-  bool _isGeneratingQr = false;
-
-  void _showQrDialog(BuildContext context) async {
-    setState(() => _isGeneratingQr = true);
-    final assetPath = 'assets/pdfs/${widget.document.fileName}';
-    
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    final serverUrl = await LocalServer.startServer(assetPath);
-    
-    if (!mounted) return;
-    setState(() => _isGeneratingQr = false);
-
-    if (serverUrl != null) {
-      if (!context.mounted) return;
-      showDialog(
-        context: context,
-        builder: (_) => QrDialog(qrData: serverUrl),
-      ).then((_) {
-        LocalServer.stopServer();
-      });
-    } else {
-      scaffoldMessenger.showSnackBar(
-        const SnackBar(content: Text('Failed to generate offline link.')),
-      );
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -93,26 +64,11 @@ class _DocumentCardState extends State<DocumentCard> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          'FEATURED',
+                          'FOLDER',
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             fontSize: 10,
                             letterSpacing: 1,
                             fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: _isGeneratingQr ? null : () => _showQrDialog(context),
-                        icon: _isGeneratingQr 
-                            ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                            : const Icon(CupertinoIcons.qrcode),
-                        color: AppTheme.muted,
-                        tooltip: 'Show QR Code',
-                        visualDensity: VisualDensity.compact,
-                        style: IconButton.styleFrom(
-                          backgroundColor: AppTheme.background,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                       ),
@@ -130,10 +86,10 @@ class _DocumentCardState extends State<DocumentCard> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(CupertinoIcons.doc, size: 40, color: AppTheme.primary),
+                            Icon(CupertinoIcons.folder_solid, size: 40, color: AppTheme.primary),
                             SizedBox(height: 8),
                             Text(
-                              'PDF DOCUMENT',
+                              'COLLECTION',
                               style: TextStyle(
                                 color: AppTheme.primary,
                                 fontSize: 10,
@@ -148,14 +104,14 @@ class _DocumentCardState extends State<DocumentCard> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    widget.document.title,
+                    widget.folder.title,
                     style: Theme.of(context).textTheme.titleMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    widget.document.subtitle,
+                    widget.folder.subtitle,
                     style: Theme.of(context).textTheme.bodySmall,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -163,9 +119,7 @@ class _DocumentCardState extends State<DocumentCard> {
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      _buildMetaChip(context, widget.document.size, CupertinoIcons.doc_circle),
-                      const SizedBox(width: 8),
-                      _buildMetaChip(context, widget.document.pages, CupertinoIcons.book),
+                      _buildMetaChip(context, '${widget.folder.documents.length} Items', CupertinoIcons.doc_on_doc),
                       const Spacer(),
                       const Icon(
                         CupertinoIcons.arrow_right,

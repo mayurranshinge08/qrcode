@@ -1,46 +1,27 @@
 import 'package:flutter/material.dart';
 import '../models/document.dart';
-import '../data/documents.dart';
-import '../widgets/search_field.dart';
 import '../widgets/document_card.dart';
-import '../widgets/folder_card.dart';
 import 'pdf_reader_screen.dart';
-import 'folder_screen.dart';
 
-class DocumentListScreen extends StatefulWidget {
-  const DocumentListScreen({super.key});
+class FolderScreen extends StatefulWidget {
+  final FolderItem folder;
+
+  const FolderScreen({super.key, required this.folder});
 
   @override
-  State<DocumentListScreen> createState() => _DocumentListScreenState();
+  State<FolderScreen> createState() => _FolderScreenState();
 }
 
-class _DocumentListScreenState extends State<DocumentListScreen> {
-  String _searchQuery = '';
-
-  List<LibraryItem> get _filteredDocuments {
-    if (_searchQuery.isEmpty) return documentList;
-    final lowerQuery = _searchQuery.toLowerCase();
-    return documentList.where((item) {
-      return item.title.toLowerCase().contains(lowerQuery) ||
-          item.subtitle.toLowerCase().contains(lowerQuery);
-    }).toList();
-  }
-
+class _FolderScreenState extends State<FolderScreen> {
   void _openPdf(PdfDocumentItem document) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => PdfReaderScreen(document: document)),
     );
   }
 
-  void _openFolder(FolderItem folder) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => FolderScreen(folder: folder)));
-  }
-
   @override
   Widget build(BuildContext context) {
-    final docs = _filteredDocuments;
+    final docs = widget.folder.documents;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -50,13 +31,13 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
         title: Column(
           children: [
             // Text(
-            //   'YOUR READING SHELF',
+            //   'FOLDER',
             //   style: Theme.of(
             //     context,
             //   ).textTheme.bodySmall?.copyWith(letterSpacing: 1.5),
             // ),
             const SizedBox(height: 4),
-            const Text('PDF Documents'),
+            Text(widget.folder.title),
           ],
         ),
         actions: [
@@ -84,12 +65,8 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                 children: [
                   const SizedBox(height: 24),
                   Text(
-                    '${documentList.length} carefully collected guides',
+                    '${docs.length} carefully collected guides',
                     style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 24),
-                  SearchField(
-                    onChanged: (val) => setState(() => _searchQuery = val),
                   ),
                   const SizedBox(height: 32),
                   Expanded(
@@ -99,7 +76,7 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
-                                  Icons.search_off,
+                                  Icons.folder_open,
                                   size: 64,
                                   color: Theme.of(
                                     context,
@@ -107,7 +84,7 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
-                                  'No documents found',
+                                  'Empty Folder',
                                   style: Theme.of(
                                     context,
                                   ).textTheme.titleMedium,
@@ -117,11 +94,11 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                           )
                         : LayoutBuilder(
                             builder: (context, constraints) {
-                              int crossAxisCount = 2;
+                              int crossAxisCount = 1;
                               if (constraints.maxWidth >= 1000) {
                                 crossAxisCount = 3;
                               } else if (constraints.maxWidth >= 680) {
-                                crossAxisCount = 3;
+                                crossAxisCount = 2;
                               }
 
                               return GridView.builder(
@@ -136,19 +113,10 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                                     ),
                                 itemCount: docs.length,
                                 itemBuilder: (context, index) {
-                                  final item = docs[index];
-                                  if (item is FolderItem) {
-                                    return FolderCard(
-                                      folder: item,
-                                      onTap: () => _openFolder(item),
-                                    );
-                                  } else if (item is PdfDocumentItem) {
-                                    return DocumentCard(
-                                      document: item,
-                                      onTap: () => _openPdf(item),
-                                    );
-                                  }
-                                  return const SizedBox.shrink();
+                                  return DocumentCard(
+                                    document: docs[index],
+                                    onTap: () => _openPdf(docs[index]),
+                                  );
                                 },
                               );
                             },
