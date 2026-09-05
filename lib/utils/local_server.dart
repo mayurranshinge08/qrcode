@@ -7,7 +7,7 @@ class LocalServer {
   static String? _serverUrl;
 
   /// Starts the local server and returns the URL string containing the local IP
-  /// Example: http://192.168.1.15:8080/download
+  /// Example: http://192.168.1.15:8080/document.pdf
   static Future<String?> startServer(String assetPath) async {
     if (kIsWeb) {
       try {
@@ -20,7 +20,14 @@ class LocalServer {
         // Remove trailing slash from path if it exists to avoid double slashes
         final cleanPath = path.endsWith('/') ? path.substring(0, path.length - 1) : path;
         
-        final webUrl = '$baseUrl$cleanPath/$assetPath';
+        // Flutter web serves assets inside an 'assets' directory. 
+        // We must properly encode each segment to handle characters like '+' and spaces.
+        final encodedAssetPath = assetPath
+            .split('/')
+            .map((segment) => Uri.encodeComponent(segment))
+            .join('/');
+            
+        final webUrl = '$baseUrl$cleanPath/assets/$encodedAssetPath';
         return webUrl;
       } catch (e) {
         return null;
@@ -45,9 +52,9 @@ class LocalServer {
             final bytes = buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
 
             // Set headers for file download
-            // Using octet-stream and attachment forces the browser to download the file 
-            // via Android's DownloadManager rather than passing the URL directly to Google Drive.
-            request.response.headers.contentType = ContentType('application', 'octet-stream');
+            // Using application/pdf and inline allows mobile browsers (especially iOS Safari) 
+            // to open the PDF natively, where the user can easily view and save it.
+            request.response.headers.contentType = ContentType('application', 'pdf');
             request.response.headers.contentLength = bytes.length;
             
             // Allow cross-origin just in case
@@ -55,12 +62,13 @@ class LocalServer {
             
             // Clean up filename for the header to prevent browser parsing errors
             String fileName = assetPath.split('/').last;
-            fileName = fileName.replaceAll(RegExp(r'[^a-zA-Z0-9.\-_ ]'), '_');
+            // Replace spaces and invalid characters with underscores
+            fileName = fileName.replaceAll(RegExp(r'[^a-zA-Z0-9.\-_]'), '_');
             if (!fileName.toLowerCase().endsWith('.pdf')) {
               fileName += '.pdf';
             }
             
-            request.response.headers.add('Content-Disposition', 'attachment; filename="$fileName"');
+            request.response.headers.add('Content-Disposition', 'inline; filename="$fileName"');
             
             if (request.method == 'HEAD') {
               await request.response.close();

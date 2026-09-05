@@ -11,6 +11,7 @@ class QrDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('QR Data: $qrData');
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
