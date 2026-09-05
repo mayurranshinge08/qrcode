@@ -9,11 +9,7 @@ class DocumentCard extends StatefulWidget {
   final PdfDocumentItem document;
   final VoidCallback onTap;
 
-  const DocumentCard({
-    super.key,
-    required this.document,
-    required this.onTap,
-  });
+  const DocumentCard({super.key, required this.document, required this.onTap});
 
   @override
   State<DocumentCard> createState() => _DocumentCardState();
@@ -26,10 +22,10 @@ class _DocumentCardState extends State<DocumentCard> {
   void _showQrDialog(BuildContext context) async {
     setState(() => _isGeneratingQr = true);
     final assetPath = 'assets/pdfs/${widget.document.fileName}';
-    
+
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final serverUrl = await LocalServer.startServer(assetPath);
-    
+
     if (!mounted) return;
     setState(() => _isGeneratingQr = false);
 
@@ -47,7 +43,6 @@ class _DocumentCardState extends State<DocumentCard> {
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +63,7 @@ class _DocumentCardState extends State<DocumentCard> {
                     color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
-                  )
+                  ),
                 ]
               : [],
         ),
@@ -87,24 +82,36 @@ class _DocumentCardState extends State<DocumentCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: AppTheme.background,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           'FEATURED',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: 10,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(
+                                fontSize: 10,
+                                letterSpacing: 1,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ),
                       IconButton(
-                        onPressed: _isGeneratingQr ? null : () => _showQrDialog(context),
-                        icon: _isGeneratingQr 
-                            ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                        onPressed: _isGeneratingQr
+                            ? null
+                            : () => _showQrDialog(context),
+                        icon: _isGeneratingQr
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
                             : const Icon(CupertinoIcons.qrcode),
                         color: AppTheme.muted,
                         tooltip: 'Show QR Code',
@@ -130,7 +137,11 @@ class _DocumentCardState extends State<DocumentCard> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(CupertinoIcons.doc, size: 40, color: AppTheme.primary),
+                            Icon(
+                              CupertinoIcons.doc,
+                              size: 40,
+                              color: AppTheme.primary,
+                            ),
                             SizedBox(height: 8),
                             Text(
                               'PDF DOCUMENT',
@@ -163,9 +174,17 @@ class _DocumentCardState extends State<DocumentCard> {
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      _buildMetaChip(context, widget.document.size, CupertinoIcons.doc_circle),
+                      _buildMetaChip(
+                        context,
+                        widget.document.size,
+                        CupertinoIcons.doc_circle,
+                      ),
                       const SizedBox(width: 8),
-                      _buildMetaChip(context, widget.document.pages, CupertinoIcons.book),
+                      _buildMetaChip(
+                        context,
+                        widget.document.pages,
+                        CupertinoIcons.book,
+                      ),
                       const Spacer(),
                       const Icon(
                         CupertinoIcons.arrow_right,
@@ -197,7 +216,9 @@ class _DocumentCardState extends State<DocumentCard> {
           const SizedBox(width: 4),
           Text(
             text,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(fontSize: 10),
           ),
         ],
       ),

@@ -37,15 +37,18 @@ class _FolderScreenState extends State<FolderScreen> {
             //   ).textTheme.bodySmall?.copyWith(letterSpacing: 1.5),
             // ),
             const SizedBox(height: 4),
-            Text(widget.folder.title),
+            Text(
+              widget.folder.title,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Image.asset('assets/images/SUN Logo.jpg', height: 40),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 16.0),
+        //     child: Image.asset('assets/images/SUN Logo.jpg', height: 40),
+        //   ),
+        // ],
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -64,10 +67,10 @@ class _FolderScreenState extends State<FolderScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 24),
-                  Text(
-                    '${docs.length} carefully collected guides',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                  // Text(
+                  //   '${docs.length} carefully collected guides',
+                  //   style: Theme.of(context).textTheme.titleMedium,
+                  // ),
                   const SizedBox(height: 32),
                   Expanded(
                     child: docs.isEmpty
@@ -94,11 +97,13 @@ class _FolderScreenState extends State<FolderScreen> {
                           )
                         : LayoutBuilder(
                             builder: (context, constraints) {
-                              int crossAxisCount = 1;
-                              if (constraints.maxWidth >= 1000) {
+                              int crossAxisCount = 2;
+                              if (constraints.maxWidth >= 1200) {
+                                crossAxisCount = 5;
+                              } else if (constraints.maxWidth >= 900) {
+                                crossAxisCount = 4;
+                              } else if (constraints.maxWidth >= 600) {
                                 crossAxisCount = 3;
-                              } else if (constraints.maxWidth >= 680) {
-                                crossAxisCount = 2;
                               }
 
                               return GridView.builder(

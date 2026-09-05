@@ -55,16 +55,16 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
             //     context,
             //   ).textTheme.bodySmall?.copyWith(letterSpacing: 1.5),
             // ),
-            const SizedBox(height: 4),
-            const Text('PDF Documents'),
+            // const SizedBox(height: 4),
+            // const Text('PDF Documents'),
           ],
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Image.asset('assets/images/SUN Logo.jpg', height: 40),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 16.0),
+        //     child: Image.asset('assets/images/SUN Logo.jpg', height: 40),
+        //   ),
+        // ],
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -83,14 +83,14 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 24),
-                  Text(
-                    '${documentList.length} carefully collected guides',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 24),
-                  SearchField(
-                    onChanged: (val) => setState(() => _searchQuery = val),
-                  ),
+                  // Text(
+                  //   '${documentList.length} carefully collected guides',
+                  //   style: Theme.of(context).textTheme.titleMedium,
+                  // ),
+                  // const SizedBox(height: 24),
+                  // SearchField(
+                  //   onChanged: (val) => setState(() => _searchQuery = val),
+                  // ),
                   const SizedBox(height: 32),
                   Expanded(
                     child: docs.isEmpty
@@ -118,9 +118,11 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                         : LayoutBuilder(
                             builder: (context, constraints) {
                               int crossAxisCount = 2;
-                              if (constraints.maxWidth >= 1000) {
-                                crossAxisCount = 3;
-                              } else if (constraints.maxWidth >= 680) {
+                              if (constraints.maxWidth >= 1200) {
+                                crossAxisCount = 5;
+                              } else if (constraints.maxWidth >= 900) {
+                                crossAxisCount = 4;
+                              } else if (constraints.maxWidth >= 600) {
                                 crossAxisCount = 3;
                               }
 
@@ -132,7 +134,7 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                                       crossAxisSpacing: 24,
                                       mainAxisSpacing: 24,
                                       childAspectRatio:
-                                          0.75, // Taller card for the thumbnail
+                                          1.2, // Wider card for folders
                                     ),
                                 itemCount: docs.length,
                                 itemBuilder: (context, index) {

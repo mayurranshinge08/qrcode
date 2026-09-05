@@ -26,10 +26,12 @@ class PdfDocumentItem extends LibraryItem {
 
 class FolderItem extends LibraryItem {
   final List<PdfDocumentItem> documents;
+  final String? imagePath;
 
   const FolderItem({
     required super.title,
     required super.subtitle,
     required this.documents,
+    this.imagePath,
   });
 }

@@ -28,6 +28,7 @@ const List<LibraryItem> documentList = [
   FolderItem(
     title: "Evidence - Dapa + Glimi + Met FDC",
     subtitle: "Evidence Documents",
+    imagePath: "assets/images/image1.jpg",
     documents: [
       PdfDocumentItem(
         title: "1a. Poster of DGM BE (5mg) study_final 100124_final",
@@ -115,6 +116,7 @@ const List<LibraryItem> documentList = [
   FolderItem(
     title: "Evidence - Dapa + Sita + Met FDC",
     subtitle: "Evidence Documents",
+    imagePath: "assets/images/image2.jpg",
     documents: [
       PdfDocumentItem(
         title: "2a. RSSDI_oral ppt_Sita SitaMet RWE_12042024",
@@ -138,6 +140,7 @@ const List<LibraryItem> documentList = [
   FolderItem(
     title: "Evidence - Dapa + Sita FDC",
     subtitle: "Evidence Documents",
+    imagePath: "assets/images/image3.jpg",
     documents: [
       PdfDocumentItem(
         title: "1a. Oral PPT_IDS_Dapa Sita RWE",
@@ -191,6 +194,7 @@ const List<LibraryItem> documentList = [
   FolderItem(
     title: "Evidence - Sita + Glimi + Met FDC",
     subtitle: "Evidence Documents",
+    imagePath: "assets/images/image4.jpg",
     documents: [
       PdfDocumentItem(
         title: "2a. Poster_Diabetes India_Sita+glime+met rationale",

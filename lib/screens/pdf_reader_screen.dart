@@ -113,18 +113,20 @@ class _PdfReaderScreenState extends State<PdfReaderScreen> {
       backgroundColor: Colors.white,
 
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(
           widget.document.title,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         centerTitle: false,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Image.asset('assets/images/SUN Logo.jpg', height: 40),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 16.0),
+        //     child: Image.asset('assets/images/SUN Logo.jpg', height: 40),
+        //   ),
+        // ],
       ),
 
       body: Column(
