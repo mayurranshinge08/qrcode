@@ -1,4 +1,4 @@
-name: Build Windows Desktop App
+-name: Build Windows Desktop App
 
 on:
   workflow_dispatch: # Allows manual triggering from the GitHub Actions tab

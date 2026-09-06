@@ -165,34 +165,34 @@ class _DocumentCardState extends State<DocumentCard> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    widget.document.subtitle,
-                    style: Theme.of(context).textTheme.bodySmall,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  // Text(
+                  //   widget.document.subtitle,
+                  //   style: Theme.of(context).textTheme.bodySmall,
+                  //   maxLines: 2,
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
                   const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      _buildMetaChip(
-                        context,
-                        widget.document.size,
-                        CupertinoIcons.doc_circle,
-                      ),
-                      const SizedBox(width: 8),
-                      _buildMetaChip(
-                        context,
-                        widget.document.pages,
-                        CupertinoIcons.book,
-                      ),
-                      const Spacer(),
-                      const Icon(
-                        CupertinoIcons.arrow_right,
-                        size: 16,
-                        color: AppTheme.primary,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     _buildMetaChip(
+                  //       context,
+                  //       widget.document.size,
+                  //       CupertinoIcons.doc_circle,
+                  //     ),
+                  //     const SizedBox(width: 8),
+                  //     _buildMetaChip(
+                  //       context,
+                  //       widget.document.pages,
+                  //       CupertinoIcons.book,
+                  //     ),
+                  //     const Spacer(),
+                  //     const Icon(
+                  //       CupertinoIcons.arrow_right,
+                  //       size: 16,
+                  //       color: AppTheme.primary,
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
@@ -202,26 +202,26 @@ class _DocumentCardState extends State<DocumentCard> {
     );
   }
 
-  Widget _buildMetaChip(BuildContext context, String text, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppTheme.background,
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 12, color: AppTheme.muted),
-          const SizedBox(width: 4),
-          Text(
-            text,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(fontSize: 10),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildMetaChip(BuildContext context, String text, IconData icon) {
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+  //     decoration: BoxDecoration(
+  //       color: AppTheme.background,
+  //       borderRadius: BorderRadius.circular(6),
+  //     ),
+  //     child: Row(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: [
+  //         Icon(icon, size: 12, color: AppTheme.muted),
+  //         const SizedBox(width: 4),
+  //         Text(
+  //           text,
+  //           style: Theme.of(
+  //             context,
+  //           ).textTheme.bodySmall?.copyWith(fontSize: 10),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
