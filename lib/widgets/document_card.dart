@@ -81,48 +81,48 @@ class _DocumentCardState extends State<DocumentCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppTheme.background,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          'FEATURED',
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(
-                                fontSize: 10,
-                                letterSpacing: 1,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: _isGeneratingQr
-                            ? null
-                            : () => _showQrDialog(context),
-                        icon: _isGeneratingQr
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : const Icon(CupertinoIcons.qrcode),
-                        color: AppTheme.muted,
-                        tooltip: 'Show QR Code',
-                        visualDensity: VisualDensity.compact,
-                        style: IconButton.styleFrom(
-                          backgroundColor: AppTheme.background,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   padding: const EdgeInsets.symmetric(
+                      //     horizontal: 10,
+                      //     vertical: 4,
+                      //   ),
+                      //   decoration: BoxDecoration(
+                      //     color: AppTheme.background,
+                      //     borderRadius: BorderRadius.circular(12),
+                      //   ),
+                      //   child: Text(
+                      //     'FEATURED',
+                      //     style: Theme.of(context).textTheme.bodySmall
+                      //         ?.copyWith(
+                      //           fontSize: 10,
+                      //           letterSpacing: 1,
+                      //           fontWeight: FontWeight.bold,
+                      //         ),
+                      //   ),
+                      // ),
+                      // IconButton(
+                      //   onPressed: _isGeneratingQr
+                      //       ? null
+                      //       : () => _showQrDialog(context),
+                      //   icon: _isGeneratingQr
+                      //       ? const SizedBox(
+                      //           width: 16,
+                      //           height: 16,
+                      //           child: CircularProgressIndicator(
+                      //             strokeWidth: 2,
+                      //           ),
+                      //         )
+                      //       : const Icon(CupertinoIcons.qrcode),
+                      //   color: AppTheme.muted,
+                      //   tooltip: 'Show QR Code',
+                      //   visualDensity: VisualDensity.compact,
+                      //   style: IconButton.styleFrom(
+                      //     backgroundColor: AppTheme.background,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(8),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                   const SizedBox(height: 12),

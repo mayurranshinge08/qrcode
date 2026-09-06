@@ -38,6 +38,14 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
     ).push(MaterialPageRoute(builder: (_) => FolderScreen(folder: folder)));
   }
 
+  void _goBack() {
+    Navigator.of(context).pop();
+  }
+
+  void _goHome() {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
   @override
   Widget build(BuildContext context) {
     final docs = _filteredDocuments;
@@ -45,6 +53,7 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Column(
@@ -161,6 +170,40 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 10,
+                offset: const Offset(0, -2),
+                color: Colors.black.withValues(alpha: 0.08),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              // BACK
+              Expanded(
+                child: GestureDetector(
+                  onTap: _goBack,
+                  child: Image.asset('assets/images/Back.png', height: 40),
+                ),
+              ),
+              // HOME
+              Expanded(
+                child: GestureDetector(
+                  onTap: _goHome,
+                  child: Image.asset('assets/images/Home.png', height: 40),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

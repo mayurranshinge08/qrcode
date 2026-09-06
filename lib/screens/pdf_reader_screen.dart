@@ -113,12 +113,15 @@ class _PdfReaderScreenState extends State<PdfReaderScreen> {
       backgroundColor: Colors.white,
 
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        title: Text(
-          widget.document.title,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+        title: Center(
+          child: Text(
+            widget.document.title,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         centerTitle: false,
         // actions: [
