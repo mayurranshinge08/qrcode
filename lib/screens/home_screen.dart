@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
           // Centered Button
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 650.0),
+              padding: const EdgeInsets.only(top: 690.0),
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(
