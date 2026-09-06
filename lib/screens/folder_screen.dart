@@ -159,18 +159,14 @@ class _FolderScreenState extends State<FolderScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               // BACK
-              Expanded(
-                child: GestureDetector(
-                  onTap: _goBack,
-                  child: Image.asset('assets/images/Back.png', height: 40),
-                ),
+              GestureDetector(
+                onTap: _goBack,
+                child: Image.asset('assets/images/Back.png', height: 40),
               ),
               // HOME
-              Expanded(
-                child: GestureDetector(
-                  onTap: _goHome,
-                  child: Image.asset('assets/images/Home.png', height: 40),
-                ),
+              GestureDetector(
+                onTap: _goHome,
+                child: Image.asset('assets/images/Home.png', height: 40),
               ),
             ],
           ),

@@ -89,7 +89,7 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 24),
                   // Text(
@@ -100,7 +100,9 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                   // SearchField(
                   //   onChanged: (val) => setState(() => _searchQuery = val),
                   // ),
-                  const SizedBox(height: 32),
+                  const SizedBox(
+                    height: 150,
+                  ), // Added 100 pixels to push folders down
                   Expanded(
                     child: docs.isEmpty
                         ? Center(
@@ -135,32 +137,51 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                                 crossAxisCount = 3;
                               }
 
-                              return GridView.builder(
+                              // Prevent using more columns than we have items,
+                              // which creates massive left/right gaps when centered
+                              if (crossAxisCount > docs.length &&
+                                  docs.isNotEmpty) {
+                                crossAxisCount = docs.length;
+                              }
+
+                              final spacing = 40.0;
+                              // Calculate width ensuring they fit exactly without wrapping early
+                              final itemWidth =
+                                  (constraints.maxWidth -
+                                      (crossAxisCount - 1) * spacing -
+                                      1) /
+                                  crossAxisCount;
+
+                              return SingleChildScrollView(
                                 padding: const EdgeInsets.only(bottom: 32),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: crossAxisCount,
-                                      crossAxisSpacing: 24,
-                                      mainAxisSpacing: 24,
-                                      childAspectRatio:
-                                          1.2, // Wider card for folders
-                                    ),
-                                itemCount: docs.length,
-                                itemBuilder: (context, index) {
-                                  final item = docs[index];
-                                  if (item is FolderItem) {
-                                    return FolderCard(
-                                      folder: item,
-                                      onTap: () => _openFolder(item),
-                                    );
-                                  } else if (item is PdfDocumentItem) {
-                                    return DocumentCard(
-                                      document: item,
-                                      onTap: () => _openPdf(item),
-                                    );
-                                  }
-                                  return const SizedBox.shrink();
-                                },
+                                child: Center(
+                                  child: Wrap(
+                                    spacing: spacing,
+                                    runSpacing: spacing,
+                                    alignment: WrapAlignment.center,
+                                    children: docs.map((item) {
+                                      Widget card = const SizedBox.shrink();
+                                      if (item is FolderItem) {
+                                        card = FolderCard(
+                                          folder: item,
+                                          onTap: () => _openFolder(item),
+                                        );
+                                      } else if (item is PdfDocumentItem) {
+                                        card = DocumentCard(
+                                          document: item,
+                                          onTap: () => _openPdf(item),
+                                        );
+                                      }
+                                      return SizedBox(
+                                        width: itemWidth,
+                                        height:
+                                            itemWidth /
+                                            1.2, // Maintain aspect ratio
+                                        child: card,
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
                               );
                             },
                           ),
@@ -188,18 +209,14 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               // BACK
-              Expanded(
-                child: GestureDetector(
-                  onTap: _goBack,
-                  child: Image.asset('assets/images/Back.png', height: 40),
-                ),
+              GestureDetector(
+                onTap: _goBack,
+                child: Image.asset('assets/images/Back.png', height: 40),
               ),
               // HOME
-              Expanded(
-                child: GestureDetector(
-                  onTap: _goHome,
-                  child: Image.asset('assets/images/Home.png', height: 40),
-                ),
+              GestureDetector(
+                onTap: _goHome,
+                child: Image.asset('assets/images/Home.png', height: 40),
               ),
             ],
           ),
