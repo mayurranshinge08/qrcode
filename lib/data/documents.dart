@@ -194,6 +194,7 @@ const List<LibraryItem> documentList = [
   FolderItem(
     title: "Evidence - Sita + Glimi + Met FDC",
     subtitle: "Evidence Documents",
+    imagePath: "assets/images/image4.jpg",
     documents: [
       PdfDocumentItem(
         title: "2a. Poster_Diabetes India_Sita+glime+met rationale",
