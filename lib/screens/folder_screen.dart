@@ -48,7 +48,11 @@ class _FolderScreenState extends State<FolderScreen> {
             const SizedBox(height: 4),
             Text(
               widget.folder.title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
@@ -64,7 +68,7 @@ class _FolderScreenState extends State<FolderScreen> {
         children: [
           // Background Image
           Image.asset(
-            'assets/images/bg.png',
+            'assets/images/background_image.jpg',
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) =>
                 Container(color: Theme.of(context).scaffoldBackgroundColor),

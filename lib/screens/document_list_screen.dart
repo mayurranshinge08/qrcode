@@ -80,114 +80,86 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
         children: [
           // Background Image
           Image.asset(
-            'assets/images/bg.png',
+            'assets/images/folders_screen.jpg',
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) =>
                 Container(color: Theme.of(context).scaffoldBackgroundColor),
           ),
           SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 24),
-                  // Text(
-                  //   '${documentList.length} carefully collected guides',
-                  //   style: Theme.of(context).textTheme.titleMedium,
-                  // ),
-                  // const SizedBox(height: 24),
-                  // SearchField(
-                  //   onChanged: (val) => setState(() => _searchQuery = val),
-                  // ),
-                  const SizedBox(
-                    height: 150,
-                  ), // Added 100 pixels to push folders down
-                  Expanded(
-                    child: docs.isEmpty
-                        ? Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.search_off,
-                                  size: 64,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.primary.withValues(alpha: 0.5),
+            child: Column(
+              children: [
+                // Top area containing the "LEADING WITH INDIAN EVIDENCES" title
+                Expanded(flex: 38, child: Container()),
+                // Bottom area containing the 2x2 grid of painted folders
+                Expanded(
+                  flex: 62,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 60.0, // avoid the bottom navigation bar
+                      left: 20.0,
+                      right: 20.0,
+                    ),
+                    child: Column(
+                      children: [
+                        // First Row
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (docs.isNotEmpty) {
+                                      _openFolder(docs[0] as FolderItem);
+                                    }
+                                  },
+                                  child: Container(color: Colors.transparent),
                                 ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'No documents found',
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.titleMedium,
+                              ),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (docs.length > 1) {
+                                      _openFolder(docs[1] as FolderItem);
+                                    }
+                                  },
+                                  child: Container(color: Colors.transparent),
                                 ),
-                              ],
-                            ),
-                          )
-                        : LayoutBuilder(
-                            builder: (context, constraints) {
-                              int crossAxisCount = 2;
-                              if (constraints.maxWidth >= 1200) {
-                                crossAxisCount = 5;
-                              } else if (constraints.maxWidth >= 900) {
-                                crossAxisCount = 4;
-                              } else if (constraints.maxWidth >= 600) {
-                                crossAxisCount = 3;
-                              }
-
-                              // Prevent using more columns than we have items,
-                              // which creates massive left/right gaps when centered
-                              if (crossAxisCount > docs.length &&
-                                  docs.isNotEmpty) {
-                                crossAxisCount = docs.length;
-                              }
-
-                              final spacing = 40.0;
-                              // Calculate width ensuring they fit exactly without wrapping early
-                              final itemWidth =
-                                  (constraints.maxWidth -
-                                      (crossAxisCount - 1) * spacing -
-                                      1) /
-                                  crossAxisCount;
-
-                              return SingleChildScrollView(
-                                padding: const EdgeInsets.only(bottom: 32),
-                                child: Center(
-                                  child: Wrap(
-                                    spacing: spacing,
-                                    runSpacing: spacing,
-                                    alignment: WrapAlignment.center,
-                                    children: docs.map((item) {
-                                      Widget card = const SizedBox.shrink();
-                                      if (item is FolderItem) {
-                                        card = FolderCard(
-                                          folder: item,
-                                          onTap: () => _openFolder(item),
-                                        );
-                                      } else if (item is PdfDocumentItem) {
-                                        card = DocumentCard(
-                                          document: item,
-                                          onTap: () => _openPdf(item),
-                                        );
-                                      }
-                                      return SizedBox(
-                                        width: itemWidth,
-                                        height:
-                                            itemWidth /
-                                            1.2, // Maintain aspect ratio
-                                        child: card,
-                                      );
-                                    }).toList(),
-                                  ),
-                                ),
-                              );
-                            },
+                              ),
+                            ],
                           ),
+                        ),
+                        // Second Row
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (docs.length > 2) {
+                                      _openFolder(docs[2] as FolderItem);
+                                    }
+                                  },
+                                  child: Container(color: Colors.transparent),
+                                ),
+                              ),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (docs.length > 3) {
+                                      _openFolder(docs[3] as FolderItem);
+                                    }
+                                  },
+                                  child: Container(color: Colors.transparent),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
