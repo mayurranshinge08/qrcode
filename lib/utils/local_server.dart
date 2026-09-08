@@ -1,28 +1,36 @@
+import 'package:flutter/foundation.dart';
+
 class LocalServer {
-  /// Generates the direct download URL for the PDF using your public GitHub repository!
-  /// This requires ZERO servers, ZERO temp files, and works everywhere in the world instantly!
   static Future<String?> startServer(String assetPath) async {
+    debugPrint('========== LOCAL SERVER DEBUG ==========');
+    debugPrint('1. startServer called with assetPath: $assetPath');
+    
     try {
-      // 1. Your GitHub repository raw content base URL
+      // Base URL for raw GitHub content
       const String githubRawBaseUrl = 'https://raw.githubusercontent.com/mayurranshinge08/qrcode/main/';
       
-      // 2. Properly encode the file path segments (to handle spaces and '+' signs)
+      // Encode the file path segments to handle spaces and special characters like '+'
       final encodedAssetPath = assetPath
           .split('/')
           .map((segment) => Uri.encodeComponent(segment))
           .join('/');
           
-      // 3. Construct the direct global internet URL
+      debugPrint('2. Encoded asset path: $encodedAssetPath');
+          
+      // Construct the direct raw GitHub URL
       final globalUrl = '$githubRawBaseUrl$encodedAssetPath';
+      
+      debugPrint('3. Final GitHub URL generated: $globalUrl');
+      debugPrint('========================================');
       
       return globalUrl;
     } catch (e) {
-      print('Error generating GitHub URL: $e');
+      debugPrint('Error generating GitHub URL: $e');
       return null;
     }
   }
 
   static Future<void> stopServer() async {
-    // No longer needed!
+    debugPrint('LocalServer.stopServer called (No-op for GitHub URLs)');
   }
 }

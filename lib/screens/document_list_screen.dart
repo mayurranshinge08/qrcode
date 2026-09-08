@@ -106,23 +106,37 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (docs.isNotEmpty) {
-                                      _openFolder(docs[0] as FolderItem);
-                                    }
-                                  },
-                                  child: Container(color: Colors.transparent),
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: FractionallySizedBox(
+                                    widthFactor: 0.85,
+                                    heightFactor: 0.45,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (docs.isNotEmpty) {
+                                          _openFolder(docs[0] as FolderItem);
+                                        }
+                                      },
+                                      child: Container(color: Colors.transparent),
+                                    ),
+                                  ),
                                 ),
                               ),
                               Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (docs.length > 1) {
-                                      _openFolder(docs[1] as FolderItem);
-                                    }
-                                  },
-                                  child: Container(color: Colors.transparent),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: FractionallySizedBox(
+                                    widthFactor: 0.85,
+                                    heightFactor: 0.45,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (docs.length > 1) {
+                                          _openFolder(docs[1] as FolderItem);
+                                        }
+                                      },
+                                      child: Container(color: Colors.transparent),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -133,23 +147,37 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (docs.length > 2) {
-                                      _openFolder(docs[2] as FolderItem);
-                                    }
-                                  },
-                                  child: Container(color: Colors.transparent),
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: FractionallySizedBox(
+                                    widthFactor: 0.85,
+                                    heightFactor: 0.45,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (docs.length > 2) {
+                                          _openFolder(docs[2] as FolderItem);
+                                        }
+                                      },
+                                      child: Container(color: Colors.transparent),
+                                    ),
+                                  ),
                                 ),
                               ),
                               Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (docs.length > 3) {
-                                      _openFolder(docs[3] as FolderItem);
-                                    }
-                                  },
-                                  child: Container(color: Colors.transparent),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: FractionallySizedBox(
+                                    widthFactor: 0.85,
+                                    heightFactor: 0.45,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (docs.length > 3) {
+                                          _openFolder(docs[3] as FolderItem);
+                                        }
+                                      },
+                                      child: Container(color: Colors.transparent),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
