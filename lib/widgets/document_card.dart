@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/document.dart';
 import '../theme/app_theme.dart';
-import '../utils/local_server.dart';
-import 'qr_dialog.dart';
 
 class DocumentCard extends StatefulWidget {
   final PdfDocumentItem document;
@@ -17,32 +15,6 @@ class DocumentCard extends StatefulWidget {
 
 class _DocumentCardState extends State<DocumentCard> {
   bool _isHovering = false;
-  bool _isGeneratingQr = false;
-
-  void _showQrDialog(BuildContext context) async {
-    setState(() => _isGeneratingQr = true);
-    final assetPath = 'assets/pdfs/${widget.document.fileName}';
-
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    final serverUrl = await LocalServer.startServer(assetPath);
-
-    if (!mounted) return;
-    setState(() => _isGeneratingQr = false);
-
-    if (serverUrl != null) {
-      if (!context.mounted) return;
-      showDialog(
-        context: context,
-        builder: (_) => QrDialog(qrData: serverUrl),
-      ).then((_) {
-        LocalServer.stopServer();
-      });
-    } else {
-      scaffoldMessenger.showSnackBar(
-        const SnackBar(content: Text('Failed to generate offline link.')),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

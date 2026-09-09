@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/document.dart';
 import '../data/documents.dart';
-import '../widgets/search_field.dart';
-import '../widgets/document_card.dart';
-import '../widgets/folder_card.dart';
-import 'pdf_reader_screen.dart';
+import '../widgets/qr_dialog.dart';
+import '../utils/local_server.dart';
+import 'package:flutter/cupertino.dart';
 import 'folder_screen.dart';
 
 class DocumentListScreen extends StatefulWidget {
@@ -15,7 +14,8 @@ class DocumentListScreen extends StatefulWidget {
 }
 
 class _DocumentListScreenState extends State<DocumentListScreen> {
-  String _searchQuery = '';
+  final String _searchQuery = '';
+  bool _isGeneratingQr = false;
 
   List<LibraryItem> get _filteredDocuments {
     if (_searchQuery.isEmpty) return documentList;
@@ -24,12 +24,6 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
       return item.title.toLowerCase().contains(lowerQuery) ||
           item.subtitle.toLowerCase().contains(lowerQuery);
     }).toList();
-  }
-
-  void _openPdf(PdfDocumentItem document) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => PdfReaderScreen(document: document)),
-    );
   }
 
   void _openFolder(FolderItem folder) {
@@ -44,6 +38,51 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
 
   void _goHome() {
     Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  Future<void> _showQrCode() async {
+    if (_isGeneratingQr) return;
+
+    setState(() {
+      _isGeneratingQr = true;
+    });
+
+    try {
+      // Use the folders screen image or a default path
+      final serverUrl = await LocalServer.startServer('assets/images/folders_screen.jpg');
+
+      if (!mounted) return;
+
+      setState(() {
+        _isGeneratingQr = false;
+      });
+
+      if (serverUrl != null && serverUrl.isNotEmpty) {
+        await showDialog(
+          context: context,
+          builder: (context) {
+            return QrDialog(qrData: serverUrl);
+          },
+        );
+
+        LocalServer.stopServer();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to generate QR code.')),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() {
+        _isGeneratingQr = false;
+      });
+
+      debugPrint('QR Error: $e');
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to generate QR code: $e')));
+    }
   }
 
   @override
@@ -217,6 +256,18 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
               GestureDetector(
                 onTap: _goHome,
                 child: Image.asset('assets/images/Home.png', height: 40),
+              ),
+              // QR CODE
+              TextButton.icon(
+                onPressed: _isGeneratingQr ? null : _showQrCode,
+                icon: _isGeneratingQr
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(CupertinoIcons.qrcode),
+                label: Text(_isGeneratingQr ? 'Loading' : 'QR Code'),
               ),
             ],
           ),

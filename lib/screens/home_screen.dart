@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'document_list_screen.dart';
+import 'publication_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -38,10 +38,11 @@ class HomeScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => const DocumentListScreen(),
+                      builder: (_) => const PublicationScreen(),
                     ),
                   );
                 },
+                child: Container(color: Colors.transparent),
               ),
             ),
           ),
