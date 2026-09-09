@@ -70,7 +70,7 @@ flutter:
     - assets/pdfs/Evidence - Dapa + Sita + Met FDC/
     - assets/pdfs/Evidence - Dapa + Sita FDC/
     - assets/pdfs/Evidence - Sita + Glimi + Met FDC/
-    - assets/pdfs/Obesity and T2DM/
+    #- assets/pdfs/Obesity and T2DM/
     - assets/pdfs/Poster Category/
 
   # An image asset can refer to one or more resolution-specific "variants", see
