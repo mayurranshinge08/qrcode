@@ -27,17 +27,129 @@ class _PosterListScreenState extends State<PosterListScreen> {
   }
 
   List<PdfDocumentItem> get _posterDocuments {
-    List<PdfDocumentItem> posters = [];
-    for (var item in documentList) {
-      if (item is FolderItem) {
-        for (var doc in item.documents) {
-          if (doc.title.toLowerCase().contains('poster')) {
-            posters.add(doc);
-          }
-        }
-      }
-    }
-    return posters;
+    return [
+      PdfDocumentItem(
+        title: "2a. Poster_Diabetes India_Sita+glime+met rationale",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_1.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "5a. Poster_ Diabetes India_Sitagliptin elderly T2DM",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_2.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "ESPE ESE_2025_SitaSItaMet_Durability_Pranav",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_3.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title:
+            "P299 Effectiveness of dapagliflozin and sitagliptin FDC_RWE study_Age",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_4.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "Poster of DGM BE (5mg) study_final 100124_final",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_5.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "Poster of DGM ER BE (10mg) study_final 100124_final",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_6.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "RSSDI 2024 Poster 1 Sitaglitpin_final",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_7.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "RSSDI 2024 Poster 2 Sitaglitpin+Metformin_final",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_8.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "RSSDI Poster_Abstract 12_DGM ER mild renal impairement",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_9.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "RSSDI Poster_Abstract 5_ DGM ER BMI",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_10.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "RSSDI Poster_Abstract 7_DGM ER conceptual",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_11.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "RSSDI poster_Abstract 4_DGM ER Age 50 yrs",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_12.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "Sitagliptin (naive)_RSSDI 2024 poster_final",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_13.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "Sitagliptin+metformin (naive)_RSSDI 2024 poster_final",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_14.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "poster to AACE 2024",
+        subtitle: "Document from Poster Category",
+        fileName: "Poster Category/poster_15.pdf",
+        size: "Unknown",
+        pages: "Unknown",
+        qrData: "",
+      ),
+    ];
   }
 
   @override
@@ -120,12 +232,12 @@ class _PosterListScreenState extends State<PosterListScreen> {
                                 padding: const EdgeInsets.only(bottom: 32),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: crossAxisCount,
-                                  crossAxisSpacing: 24,
-                                  mainAxisSpacing: 24,
-                                  childAspectRatio:
-                                      0.75, // Taller card for the thumbnail
-                                ),
+                                      crossAxisCount: crossAxisCount,
+                                      crossAxisSpacing: 24,
+                                      mainAxisSpacing: 24,
+                                      childAspectRatio:
+                                          0.75, // Taller card for the thumbnail
+                                    ),
                                 itemCount: docs.length,
                                 itemBuilder: (context, index) {
                                   return DocumentCard(

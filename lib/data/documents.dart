@@ -197,15 +197,6 @@ const List<LibraryItem> documentList = [
     imagePath: "assets/images/image4.jpg",
     documents: [
       PdfDocumentItem(
-        title: "2a. Poster_Diabetes India_Sita+glime+met rationale",
-        subtitle: "Document from Evidence - Sita + Glimi + Met FDC",
-        fileName:
-            "Evidence - Sita + Glimi + Met FDC/2a. Poster_Diabetes India_Sita+glime+met rationale.pdf",
-        size: "1.6 MB",
-        pages: "Unknown",
-        qrData: "",
-      ),
-      PdfDocumentItem(
         title: "2a. RSSDI Poster_Abstract 8_SGM ER conceptual",
         subtitle: "Document from Evidence - Sita + Glimi + Met FDC",
         fileName:
@@ -278,23 +269,6 @@ const List<LibraryItem> documentList = [
         fileName:
             "Evidence - Sita + Glimi + Met FDC/Poster to RSSDI_ Abstract 14.pdf",
         size: "525 KB",
-        pages: "Unknown",
-        qrData: "",
-      ),
-      PdfDocumentItem(
-        title: "RSSDI 2023_Poster for abstract 3",
-        subtitle: "Document from Evidence - Sita + Glimi + Met FDC",
-        fileName:
-            "Evidence - Sita + Glimi + Met FDC/RSSDI 2023_Poster for abstract 3.pdf",
-        size: "91 KB",
-        pages: "Unknown",
-        qrData: "",
-      ),
-      PdfDocumentItem(
-        title: "Sita+Glime+Met_IDS",
-        subtitle: "Document from Evidence - Sita + Glimi + Met FDC",
-        fileName: "Evidence - Sita + Glimi + Met FDC/Sita+Glime+Met_IDS.pdf",
-        size: "1014 KB",
         pages: "Unknown",
         qrData: "",
       ),
