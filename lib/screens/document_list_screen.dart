@@ -49,7 +49,9 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
 
     try {
       // Use the folders screen image or a default path
-      final serverUrl = await LocalServer.startServer('assets/images/folders_screen.jpg');
+      final serverUrl = await LocalServer.startServer(
+        'assets/images/folders_screen.jpg',
+      );
 
       if (!mounted) return;
 
@@ -156,7 +158,9 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                                           _openFolder(docs[0] as FolderItem);
                                         }
                                       },
-                                      child: Container(color: Colors.transparent),
+                                      child: Container(
+                                        color: Colors.transparent,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -173,7 +177,9 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                                           _openFolder(docs[1] as FolderItem);
                                         }
                                       },
-                                      child: Container(color: Colors.transparent),
+                                      child: Container(
+                                        color: Colors.transparent,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -197,7 +203,9 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                                           _openFolder(docs[2] as FolderItem);
                                         }
                                       },
-                                      child: Container(color: Colors.transparent),
+                                      child: Container(
+                                        color: Colors.transparent,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -214,7 +222,9 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                                           _openFolder(docs[3] as FolderItem);
                                         }
                                       },
-                                      child: Container(color: Colors.transparent),
+                                      child: Container(
+                                        color: Colors.transparent,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -258,17 +268,17 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                 child: Image.asset('assets/images/Home.png', height: 40),
               ),
               // QR CODE
-              TextButton.icon(
-                onPressed: _isGeneratingQr ? null : _showQrCode,
-                icon: _isGeneratingQr
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Icon(CupertinoIcons.qrcode),
-                label: Text(_isGeneratingQr ? 'Loading' : 'QR Code'),
-              ),
+              // TextButton.icon(
+              //   onPressed: _isGeneratingQr ? null : _showQrCode,
+              //   icon: _isGeneratingQr
+              //       ? const SizedBox(
+              //           width: 18,
+              //           height: 18,
+              //           child: CircularProgressIndicator(strokeWidth: 2),
+              //         )
+              //       : const Icon(CupertinoIcons.qrcode),
+              //   label: Text(_isGeneratingQr ? 'Loading' : 'QR Code'),
+              // ),
             ],
           ),
         ),
