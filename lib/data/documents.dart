@@ -272,6 +272,32 @@ const List<LibraryItem> documentList = [
         pages: "Unknown",
         qrData: "",
       ),
+      PdfDocumentItem(
+        title: "2a. Poster_Diabetes India_Sita+glime+met rationale",
+        subtitle: "Document from Evidence - Sita + Glimi + Met FDC",
+        fileName:
+            "Evidence - Sita + Glimi + Met FDC/2a. Poster_Diabetes India_Sita+glime+met rationale.pdf",
+        size: "1.6 MB",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "RSSDI 2023_Poster for abstract 3",
+        subtitle: "Document from Evidence - Sita + Glimi + Met FDC",
+        fileName:
+            "Evidence - Sita + Glimi + Met FDC/RSSDI 2023_Poster for abstract 3.pdf",
+        size: "92 KB",
+        pages: "Unknown",
+        qrData: "",
+      ),
+      PdfDocumentItem(
+        title: "Sita+Glime+Met_IDS",
+        subtitle: "Document from Evidence - Sita + Glimi + Met FDC",
+        fileName: "Evidence - Sita + Glimi + Met FDC/Sita+Glime+Met_IDS.pdf",
+        size: "1.0 MB",
+        pages: "Unknown",
+        qrData: "",
+      ),
     ],
   ),
 ];
